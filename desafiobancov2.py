@@ -68,6 +68,12 @@ def exibir_extrato(saldo,/,*, extrato):
     cpf_verificado = re.match(pattern,usuario['cpf'])
     if cpf_verificado == True and :'''
 
+def filtrar_usuario(cpf, lista_usuarios):
+    
+
+
+def criar_conta(AGENCIA, numero_conta, usuario):
+
 
 def main():
     AGENCIA = "0001"
@@ -95,7 +101,8 @@ def main():
             case "e":
                 exibir_extrato(saldo, extrato=extrato)
             case "nc":
-                
+                numero_conta = len(contas) + 1
+                conta = criar_conta(AGENCIA, numero_conta, usuario)
             case "lc":
 
             case "q":
