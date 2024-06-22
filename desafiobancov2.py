@@ -62,14 +62,16 @@ def exibir_extrato(saldo,/,*, extrato):
     print(f"\n\033[1;33mSaldo: R$ {saldo:.2f}\033[m")
     print("\033[1;33m==========================================\033[m")
 
-'''def criar_usuario(usuario):
+def criar_usuario(usuario):
     import re
     pattern = '\d{3}.\d{3}.\d{3}-\d{2}'
+
     cpf_verificado = re.match(pattern,usuario['cpf'])
-    if cpf_verificado == True and :'''
+    if cpf_verificado == True and :
 
 def filtrar_usuario(cpf, lista_usuarios):
-    
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
 
 
 def criar_conta(AGENCIA, numero_conta, usuario):
