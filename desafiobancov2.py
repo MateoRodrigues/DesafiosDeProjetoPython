@@ -62,21 +62,37 @@ def exibir_extrato(saldo,/,*, extrato):
     print(f"\n\033[1;33mSaldo: R$ {saldo:.2f}\033[m")
     print("\033[1;33m==========================================\033[m")
 
-def criar_usuario(usuario):
-    import re
-    pattern = '\d{3}.\d{3}.\d{3}-\d{2}'
-
-    cpf_verificado = re.match(pattern,usuario['cpf'])
-    if cpf_verificado == True and :
+def criar_usuario(lista_usuario):
+    usuario = dict()
+    usuario['cpf'] = int(input('Número do CPF:'))
+    if filtrar_usuario(usuario['cpf'],lista_usuario) is None:
+        usuario['nome'] = input('Nome do Usuário(a): ')
+        usuario['data_nascimento'] = input("Informe a data de nascimento (dd-mm-aaaa): ")
+        usuario['endereco'] = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
+        return usuario
+    else:
+        print('\033[1;31ERRO: Ao criar o usuário\033[m')
 
 def filtrar_usuario(cpf, lista_usuarios):
-    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    usuarios_filtrados = [usuario for usuario in lista_usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
 
 
-def criar_conta(AGENCIA, numero_conta, usuario):
+def criar_conta(AGENCIA, numero_conta, usuario_cpf, lista_contas):
+    conta = {}
+    if (len(AGENCIA) == 4) and ((numero_conta not in lista_contas) or (usuario_cpf == None)):
+        conta['agencia'] = AGENCIA
+        conta['numero_da_conta'] = numero_conta
+        conta['usuario'] = usuario_cpf
+        return conta
+    else:
+        print('\033[1;31mERRO: Não foi possível criar usuário\033[m ')
 
 
+def listar_contas(contas):
+    for conta in contas:
+        for k,v in conta.items():
+            print(f'\033[1;31m{k} = {v}\033[m')
 def main():
     AGENCIA = "0001"
     saldo = 0
@@ -104,9 +120,15 @@ def main():
                 exibir_extrato(saldo, extrato=extrato)
             case "nc":
                 numero_conta = len(contas) + 1
-                conta = criar_conta(AGENCIA, numero_conta, usuario)
+                usuario_cpf = filtrar_usuario(int(input("\033[1;33mDigite o número de CPF do usuário(a):\033[m")),lista_usuarios)
+                if usuario_cpf:
+                    contas.append(criar_conta(AGENCIA, numero_conta, usuario_cpf, contas))
+                else:
+                    print('\033[1;31mERRO:Usuário com CPF inválido\033[m')
             case "lc":
-
+                listar_contas(contas)
+            case "nu":
+                lista_usuarios.append(criar_usuario(lista_usuarios))
             case "q":
                 break
             case _:
